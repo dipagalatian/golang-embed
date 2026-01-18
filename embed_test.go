@@ -59,3 +59,22 @@ func TestEmbedMultipleFiles(t *testing.T) {
 	fmt.Println("dataC:", string(dataC))
 
 }
+
+//go:embed files/*.txt
+var path embed.FS
+func TestPathMatcher(t *testing.T) {
+	
+dirEntry, _ := path.ReadDir("files") 
+
+	for _, entry := range dirEntry {
+
+		if !entry.IsDir() {
+			fmt.Println("Entry name:", entry.Name())
+
+			data, _ := path.ReadFile("files/" + entry.Name())
+			fmt.Println("Data:", string(data))
+		}
+		
+	}
+	
+} 
